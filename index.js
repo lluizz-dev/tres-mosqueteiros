@@ -13,6 +13,7 @@ let tabuleiro = [
 const divTabuleiro = document.getElementById('tabuleiro');
 let vezAtual = mosqueteiro;
 let mosqueteiroSelecionado;
+let guardaSelecionado;
 
 function criarTabuleiro() {
 
@@ -38,6 +39,9 @@ function criarTabuleiro() {
                 if (posicaoAtual === mosqueteiro) {
                     mosqueteiroSelecionado = casa;
                 }
+                else if (posicaoAtual === guarda) {
+                    guardaSelecionado = casa;
+                }
                 movimentacao(i, j, casa);
             });
 
@@ -60,8 +64,8 @@ function mensagemVez() {
     }
 }
 
-function mudarVez(ultimaVez) {
-    if (ultimaVez === mosqueteiro) {
+function mudarVez() {
+    if (vezAtual === mosqueteiro) {
         vezAtual = guarda;
     }
     else {
@@ -112,7 +116,44 @@ function movimentacao(i, j, lugar) {
             tabuleiro[linhaMosqueteiro][colunaMosqueteiro] = vazio;
 
             divTabuleiro.innerHTML = '';
+            
+            mudarVez();
+            criarTabuleiro();
+        }
+        else {
+            const direcoes = [
+                [-1, 0], // cima
+                [1, 0],  // baixo
+                [0, -1], // esquerda
+                [0, 1]   // direita
+            ];
 
+            for (const [di, dj] of direcoes) {
+                let novaLinha = i + di;
+                let novaColuna = j + dj;
+
+                if (novaLinha >= 0 && novaLinha < 5 && novaColuna >= 0 && novaColuna < 5) {
+                    if (tabuleiro[novaLinha][novaColuna] === vazio) {
+                        casa = document.querySelector(`[data-linha="${novaLinha}"][data-coluna="${novaColuna}"]`);
+                        casa.classList.add('destacado');
+                    }
+                }
+            }
+        }
+    }
+    else if (posicaoClique === vazio) {
+        casa = document.querySelector(`[data-linha="${i}"][data-coluna="${j}"]`);
+
+        if (casa.classList.contains('destacado')) {
+            let linhaGuarda = Number(guardaSelecionado.dataset.linha);
+            let colunaGuarda = Number(guardaSelecionado.dataset.coluna);
+
+            tabuleiro[i][j] = guarda;
+            tabuleiro[linhaGuarda][colunaGuarda] = vazio;
+
+            divTabuleiro.innerHTML = '';
+            
+            mudarVez();
             criarTabuleiro();
         }
     }
