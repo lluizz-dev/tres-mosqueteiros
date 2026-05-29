@@ -20,10 +20,10 @@ function criarTabuleiro() {
             let posicaoAtual = tabuleiro[i][j];
             let casa = document.createElement('div');
 
-            if (posicaoAtual == vazio) {
+            if (posicaoAtual === vazio) {
                 casa.classList.add('casa', 'vazio');
             }
-            else if (posicaoAtual == mosqueteiro) {
+            else if (posicaoAtual === mosqueteiro) {
                 casa.classList.add('casa', 'mosqueteiro');
             }
             else {
@@ -35,4 +35,16 @@ function criarTabuleiro() {
     }
 }
 
-criarTabuleiro()
+function mensagemVez(vez) {
+    const h1MensagemVez = document.querySelector('#mensagem');
+
+    if (vez === mosqueteiro) {
+        h1MensagemVez.textContent = "Vez do mosqueteiro!";
+    }
+    else {
+        h1MensagemVez.textContent = "Vez do guarda!";
+    }
+}
+
+criarTabuleiro();
+mensagemVez(mosqueteiro);
