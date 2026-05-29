@@ -119,6 +119,9 @@ function movimentacao(i, j, lugar) {
             
             mudarVez();
             criarTabuleiro();
+            if (verificacaoGameOver()) {
+                // guardas venceram!
+            }
         }
         else {
             const direcoes = [
@@ -155,6 +158,9 @@ function movimentacao(i, j, lugar) {
             
             mudarVez();
             criarTabuleiro();
+            if (verificacaoGameOver()) {
+                // mosqueteiros venceram!
+            }
         }
     }
 }
@@ -184,6 +190,29 @@ function verificacaoGameOver() {
             if (soma === 3) return true;
             else soma = 0;
         }
+    }
+    else if (vezAtual === mosqueteiro) {
+        let temGuardas = false;
+        const direcoes = [[-1,0],[1,0],[0,-1],[0,1]];
+
+        for (let i = 0; i < tabuleiro.length; i++) {
+            for (let j = 0; j < tabuleiro[i].length; j++) {
+                if (tabuleiro[i][j] === mosqueteiro) {
+                    for (const [di, dj] of direcoes) {
+                        let novaLinha = i + di;
+                        let novaColuna = j + dj;
+
+                        if (novaLinha >= 0 && novaLinha < 5 && novaColuna >= 0 && novaColuna < 5) {
+                            if (tabuleiro[novaLinha][novaColuna] === guarda) {
+                                temGuardas = true;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        return temGuardas;
     }
 
     return false;
