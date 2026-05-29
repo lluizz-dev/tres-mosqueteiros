@@ -33,6 +33,7 @@ function criarTabuleiro() {
             }
 
             casa.addEventListener('click', function() {
+                varrerDestaques();
                 movimentacao(i, j);
             });
 
@@ -95,5 +96,12 @@ function movimentacao(i, j) {
                 }
             }
         }
+    }
+}
+
+function varrerDestaques() {
+    let destaques = document.querySelectorAll('.destacado');
+    for (const destaque of destaques) {
+        destaque.classList.remove('destacado');
     }
 }
