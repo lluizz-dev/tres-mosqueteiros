@@ -165,3 +165,26 @@ function varrerDestaques() {
         destaque.classList.remove('destacado');
     }
 }
+
+function verificacaoGameOver() {
+    let soma = 0;
+
+    if (vezAtual === guarda) {
+        for (let i = 0; i < tabuleiro.length; i++) {
+            for (let j = 0; j < tabuleiro[i].length; j++) {
+                if (tabuleiro[i][j] === mosqueteiro) soma++;
+            }
+            if (soma === 3) return true;
+            else soma = 0;
+        }
+        for (let i = 0; i < tabuleiro.length; i++) {
+            for (let j = 0; j < tabuleiro[i].length; j++) {
+                if (tabuleiro[j][i] === mosqueteiro) soma++;
+            }
+            if (soma === 3) return true;
+            else soma = 0;
+        }
+    }
+
+    return false;
+}
