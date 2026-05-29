@@ -3,19 +3,18 @@
 const vazio = 0
 const mosqueteiro = 1;
 const guarda = 2;
-let tabuleiro;
-const divTabuleiro = document.getElementById('tabuleiro');
-let vezAtual = mosqueteiro;
-
-function criarTabuleiro() {
-
-    tabuleiro = [
+let tabuleiro = [
         [mosqueteiro, guarda, guarda,      guarda, guarda     ],
         [guarda,      guarda, guarda,      guarda, guarda     ],
         [guarda,      guarda, mosqueteiro, guarda, guarda     ],
         [guarda,      guarda, guarda,      guarda, guarda     ],
         [guarda,      guarda, guarda,      guarda, mosqueteiro],
     ];
+const divTabuleiro = document.getElementById('tabuleiro');
+let vezAtual = mosqueteiro;
+let mosqueteiroSelecionado;
+
+function criarTabuleiro() {
 
     for (let i = 0; i < tabuleiro.length; i++) {
         for (let j = 0; j < tabuleiro[i].length; j++) {
@@ -33,8 +32,13 @@ function criarTabuleiro() {
             }
 
             casa.addEventListener('click', function() {
-                varrerDestaques();
-                movimentacao(i, j);
+                if (casa.classList.contains('destacado') === false) {
+                    varrerDestaques();
+                }
+                if (posicaoAtual === mosqueteiro) {
+                    mosqueteiroSelecionado = casa;
+                }
+                movimentacao(i, j, casa);
             });
 
             casa.dataset.linha = i;
@@ -69,11 +73,11 @@ function mudarVez(ultimaVez) {
 criarTabuleiro();
 mensagemVez();
 
-function movimentacao(i, j) {
+function movimentacao(i, j, lugar) {
     let posicaoClique = tabuleiro[i][j];
     let casa;
 
-    if (posicaoClique !== vezAtual) {
+    if (posicaoClique !== vezAtual && lugar.classList.contains('destacado') === false) {
         return;
     }
 
@@ -95,6 +99,21 @@ function movimentacao(i, j) {
                     casa.classList.add('destacado');
                 }
             }
+        }
+    }
+    else if (posicaoClique === guarda) {
+        casa = document.querySelector(`[data-linha="${i}"][data-coluna="${j}"]`);
+
+        if (casa.classList.contains('destacado')) {
+            let linhaMosqueteiro = Number(mosqueteiroSelecionado.dataset.linha);
+            let colunaMosqueteiro = Number(mosqueteiroSelecionado.dataset.coluna);
+
+            tabuleiro[i][j] = mosqueteiro;
+            tabuleiro[linhaMosqueteiro][colunaMosqueteiro] = vazio;
+
+            divTabuleiro.innerHTML = '';
+
+            criarTabuleiro();
         }
     }
 }
