@@ -14,6 +14,8 @@ const divTabuleiro = document.getElementById('tabuleiro');
 let vezAtual = mosqueteiro;
 let mosqueteiroSelecionado;
 let guardaSelecionado;
+const h1MensagemVez = document.querySelector('#mensagem');
+let jogoAcabou = false;
 
 function criarTabuleiro() {
 
@@ -45,6 +47,8 @@ function criarTabuleiro() {
                 movimentacao(i, j, casa);
             });
 
+            
+
             casa.dataset.linha = i;
             casa.dataset.coluna = j;
 
@@ -54,7 +58,6 @@ function criarTabuleiro() {
 }
 
 function mensagemVez() {
-    const h1MensagemVez = document.querySelector('#mensagem');
 
     if (vezAtual === mosqueteiro) {
         h1MensagemVez.textContent = "Vez do mosqueteiro!";
@@ -80,6 +83,8 @@ mensagemVez();
 function movimentacao(i, j, lugar) {
     let posicaoClique = tabuleiro[i][j];
     let casa;
+
+    if (jogoAcabou) return;
 
     if (posicaoClique !== vezAtual && lugar.classList.contains('destacado') === false) {
         return;
@@ -120,7 +125,8 @@ function movimentacao(i, j, lugar) {
             mudarVez();
             criarTabuleiro();
             if (verificacaoGameOver()) {
-                // guardas venceram!
+                jogoAcabou = true;
+                h1MensagemVez.textContent = "Fim de jogo! Os Guardas ganharam!";
             }
         }
         else {
@@ -159,7 +165,8 @@ function movimentacao(i, j, lugar) {
             mudarVez();
             criarTabuleiro();
             if (verificacaoGameOver()) {
-                // mosqueteiros venceram!
+                jogoAcabou = true;
+                h1MensagemVez.textContent = "Fim de jogo! Os Mosqueteiros ganharam!";
             }
         }
     }
@@ -190,9 +197,9 @@ function verificacaoGameOver() {
             if (soma === 3) return true;
             else soma = 0;
         }
+        return false;
     }
     else if (vezAtual === mosqueteiro) {
-        let temGuardas = false;
         const direcoes = [[-1,0],[1,0],[0,-1],[0,1]];
 
         for (let i = 0; i < tabuleiro.length; i++) {
@@ -204,16 +211,13 @@ function verificacaoGameOver() {
 
                         if (novaLinha >= 0 && novaLinha < 5 && novaColuna >= 0 && novaColuna < 5) {
                             if (tabuleiro[novaLinha][novaColuna] === guarda) {
-                                temGuardas = true;
+                                return false;
                             }
                         }
                     }
                 }
             }
         }
-
-        return temGuardas;
+        return true;
     }
-
-    return false;
 }
