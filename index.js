@@ -14,6 +14,8 @@ const divTabuleiro = document.getElementById('tabuleiro');
 let vezAtual = mosqueteiro;
 let mosqueteiroSelecionado;
 let guardaSelecionado;
+const h1MensagemVez = document.querySelector('#mensagem');
+let jogoAcabou = false;
 
 function criarTabuleiro() {
 
@@ -45,6 +47,8 @@ function criarTabuleiro() {
                 movimentacao(i, j, casa);
             });
 
+            
+
             casa.dataset.linha = i;
             casa.dataset.coluna = j;
 
@@ -54,7 +58,6 @@ function criarTabuleiro() {
 }
 
 function mensagemVez() {
-    const h1MensagemVez = document.querySelector('#mensagem');
 
     if (vezAtual === mosqueteiro) {
         h1MensagemVez.textContent = "Vez do mosqueteiro!";
@@ -80,6 +83,8 @@ mensagemVez();
 function movimentacao(i, j, lugar) {
     let posicaoClique = tabuleiro[i][j];
     let casa;
+
+    if (jogoAcabou) return;
 
     if (posicaoClique !== vezAtual && lugar.classList.contains('destacado') === false) {
         return;
@@ -119,6 +124,10 @@ function movimentacao(i, j, lugar) {
             
             mudarVez();
             criarTabuleiro();
+            if (verificacaoGameOver()) {
+                jogoAcabou = true;
+                h1MensagemVez.textContent = "Fim de jogo! Os Guardas ganharam!";
+            }
         }
         else {
             const direcoes = [
@@ -155,6 +164,10 @@ function movimentacao(i, j, lugar) {
             
             mudarVez();
             criarTabuleiro();
+            if (verificacaoGameOver()) {
+                jogoAcabou = true;
+                h1MensagemVez.textContent = "Fim de jogo! Os Mosqueteiros ganharam!";
+            }
         }
     }
 }
@@ -163,5 +176,48 @@ function varrerDestaques() {
     let destaques = document.querySelectorAll('.destacado');
     for (const destaque of destaques) {
         destaque.classList.remove('destacado');
+    }
+}
+
+function verificacaoGameOver() {
+    let soma = 0;
+
+    if (vezAtual === guarda) {
+        for (let i = 0; i < tabuleiro.length; i++) {
+            for (let j = 0; j < tabuleiro[i].length; j++) {
+                if (tabuleiro[i][j] === mosqueteiro) soma++;
+            }
+            if (soma === 3) return true;
+            else soma = 0;
+        }
+        for (let i = 0; i < tabuleiro.length; i++) {
+            for (let j = 0; j < tabuleiro[i].length; j++) {
+                if (tabuleiro[j][i] === mosqueteiro) soma++;
+            }
+            if (soma === 3) return true;
+            else soma = 0;
+        }
+        return false;
+    }
+    else if (vezAtual === mosqueteiro) {
+        const direcoes = [[-1,0],[1,0],[0,-1],[0,1]];
+
+        for (let i = 0; i < tabuleiro.length; i++) {
+            for (let j = 0; j < tabuleiro[i].length; j++) {
+                if (tabuleiro[i][j] === mosqueteiro) {
+                    for (const [di, dj] of direcoes) {
+                        let novaLinha = i + di;
+                        let novaColuna = j + dj;
+
+                        if (novaLinha >= 0 && novaLinha < 5 && novaColuna >= 0 && novaColuna < 5) {
+                            if (tabuleiro[novaLinha][novaColuna] === guarda) {
+                                return false;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return true;
     }
 }
