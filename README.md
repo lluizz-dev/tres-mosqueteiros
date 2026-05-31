@@ -30,7 +30,7 @@ O jogo ocorre em um tabuleiro 5×5 com 3 peças escuras (mosqueteiros) e 22 peç
 
 Basta abrir o arquivo `index.html` no navegador — sem instalação ou dependências.
 
-Ou acesse diretamente pelo GitHub Pages: [https://github.com/lluizz-dev/tres-mosqueteiros]
+Ou acesse diretamente pelo GitHub Pages: [https://lluizz-dev.github.io/tres-mosqueteiros/]
 
 ## 📚 Contexto
 
