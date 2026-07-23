@@ -6,6 +6,9 @@ out/
 .npm/
 .yarn-integrity
 
+# TypeScript
+*.tsbuildinfo
+
 # Arquivos de ambiente e sensíveis
 .env
 .env.local
@@ -21,9 +24,11 @@ secret.json
 .Trashes
 ehthumbs.db
 Thumbs.db
+desktop.ini
 
 # Configurações de Editores de Código
-.vscode/
+.vscode/*
+!.vscode/extensions.json
 .idea/
 *.sublime-project
 *.sublime-workspace
@@ -42,3 +47,6 @@ lerna-debug.log*
 # Arquivos de cobertura de teste
 coverage/
 .nyc_output/
+
+# Entrega da atividade (não versionar o zip final)
+*.zip
