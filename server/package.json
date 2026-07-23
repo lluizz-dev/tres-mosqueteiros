@@ -1,0 +1,29 @@
+{
+  "name": "tres-mosqueteiros",
+  "version": "1.0.0",
+  "description": "Jogo de tabuleiro para dois jogadores desenvolvido com HTML, CSS e JavaScript puro.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lluizz-dev/tres-mosqueteiros.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/lluizz-dev/tres-mosqueteiros/issues"
+  },
+  "homepage": "https://github.com/lluizz-dev/tres-mosqueteiros#readme",
+  "dependencies": {
+    "ws": "^8.21.1"
+  },
+  "devDependencies": {
+    "@types/node": "^26.1.1",
+    "@types/ws": "^8.18.1",
+    "typescript": "^7.0.2"
+  }
+}
