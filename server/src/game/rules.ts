@@ -8,6 +8,7 @@ export function posicaoValida(posicao: Posicao): boolean {
 }
 
 export function calcularMovimentosValidos(tabuleiro: Tabuleiro, origem: Posicao): Posicao[] {
+    //TODO: Implementar o resto da função para os caminhos validos(cima, baixo, direita e esquerda)
     if (posicaoValida(origem)) {
         
         const peca = tabuleiro[origem.linha]![origem.coluna]; 
