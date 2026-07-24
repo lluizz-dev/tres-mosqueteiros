@@ -1,19 +1,19 @@
-enum Peca {
+export enum Peca {
     Vazio,        // 0
     Mosqueteiro,  // 1
     Guarda        // 2
 }
 
-type Tabuleiro = Peca[][];
+export type Tabuleiro = Peca[][];
 
-type Posicao = {
+export type Posicao = {
     linha: number;
     coluna: number;
 };
 
-type Jogada = {
+export type Jogada = {
     posicaoOrigem: Posicao;
     posicaoDestino: Posicao;
 }
 
-type PapelJogador = "Mosqueteiro" | "Guarda";
+export type PapelJogador = "Mosqueteiro" | "Guarda";
