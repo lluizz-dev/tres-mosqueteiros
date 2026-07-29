@@ -23,6 +23,32 @@ h1 {
     border-radius: 8px;
 }
 
+#botao-iniciar {
+    font-family: Arial, sans-serif;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: white;
+    background-color: #2c2c2c;
+    border: none;
+    padding: 10px 24px;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-bottom: 20px;
+    transition: background-color 0.15s ease, transform 0.1s ease;
+}
+
+#botao-iniciar:hover {
+    background-color: #3d3d3d;
+}
+
+#botao-iniciar:active {
+    transform: scale(0.97);
+}
+
+#botao-iniciar.escondido {
+    display: none;
+}
+
 .casa {
     width: 70px;
     height: 70px;
@@ -56,4 +82,11 @@ h1 {
     gap: 6px;
     display: grid;
     grid-template-columns: repeat(5, 1fr);
+}
+
+.casa.selecionada {
+    outline: 3px solid gold;
+}
+.casa.destaque {
+    background-color: rgba(0, 200, 0, 0.3);
 }
